@@ -16,6 +16,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import LanguageToggle from "./LanguageToggle";
+import { t } from "@/lib/i18n";
+import { useAppContext } from "./AppContext";
 
 interface HeaderProps {
   title?: string;
@@ -62,15 +65,19 @@ const Header = ({
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
   },
 }: HeaderProps) => {
+  const { primaryColor } = useAppContext();
+
   return (
     <header className="flex items-center justify-between h-20 px-6 bg-[#101010] border-b border-[#2A2A2A]">
       <div className="flex items-center">
-        <h1 className="text-2xl font-bold text-white mr-8">{title}</h1>
+        <h1 className="text-2xl font-bold text-white mr-8">
+          {t(title as any) || title}
+        </h1>
         <div className="relative w-64">
           <Input
             type="text"
-            placeholder="Search..."
-            className="pl-10 bg-[#1A1A1A] border-[#2A2A2A] text-white focus:border-[#B37A1A] focus:ring-[#B37A1A]"
+            placeholder={t("search")}
+            className="pl-10 bg-[#1A1A1A] border-[#2A2A2A] text-white focus:border-[#FFEC5C] focus:ring-[#FFEC5C]"
             onChange={(e) => onSearch(e.target.value)}
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -78,6 +85,7 @@ const Header = ({
       </div>
 
       <div className="flex items-center space-x-4">
+        <LanguageToggle />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -95,12 +103,12 @@ const Header = ({
                   className="w-80 bg-[#1A1A1A] border-[#2A2A2A] text-white"
                 >
                   <DropdownMenuLabel className="flex justify-between items-center">
-                    <span>Notifications</span>
+                    <span>{t("notifications")}</span>
                     <Button
                       variant="link"
-                      className="text-xs text-[#B37A1A] p-0 h-auto"
+                      className="text-xs text-[#FFEC5C] p-0 h-auto"
                     >
-                      Mark all as read
+                      {t("markAllAsRead")}
                     </Button>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-[#2A2A2A]" />
@@ -125,20 +133,20 @@ const Header = ({
                         </DropdownMenuItem>
                       ))}
                       <DropdownMenuSeparator className="bg-[#2A2A2A]" />
-                      <DropdownMenuItem className="justify-center text-[#B37A1A] hover:bg-[#252525] hover:text-[#B37A1A]">
-                        View all notifications
+                      <DropdownMenuItem className="justify-center text-[#FFEC5C] hover:bg-[#252525] hover:text-[#FFEC5C]">
+                        {t("viewAllNotifications")}
                       </DropdownMenuItem>
                     </>
                   ) : (
                     <div className="py-4 text-center text-gray-400">
-                      No new notifications
+                      {t("noNotifications")}
                     </div>
                   )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Notifications</p>
+              <p>{t("notifications")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -151,7 +159,7 @@ const Header = ({
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Settings</p>
+              <p>{t("settings")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -187,14 +195,14 @@ const Header = ({
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-[#2A2A2A]" />
             <DropdownMenuItem className="hover:bg-[#252525]">
-              Profile
+              {t("profile")}
             </DropdownMenuItem>
             <DropdownMenuItem className="hover:bg-[#252525]">
-              Settings
+              {t("settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-[#2A2A2A]" />
             <DropdownMenuItem className="text-red-500 hover:bg-[#252525] hover:text-red-400">
-              Log out
+              {t("logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

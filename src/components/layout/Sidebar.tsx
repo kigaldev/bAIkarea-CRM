@@ -9,6 +9,8 @@ import {
   Settings,
   HelpCircle,
   LogOut,
+  FileText,
+  ShoppingCart,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -17,30 +19,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { t } from "@/lib/i18n";
+import { useAppContext } from "./AppContext";
 
 interface SidebarProps {
   collapsed?: boolean;
 }
 
 const Sidebar = ({ collapsed = false }: SidebarProps) => {
+  const { primaryColor } = useAppContext();
+
   // Navigation items
   const navItems = [
-    { icon: <LayoutDashboard size={24} />, label: "Dashboard", path: "/" },
+    { icon: <LayoutDashboard size={24} />, label: t("dashboard"), path: "/" },
     {
       icon: <Calendar size={24} />,
-      label: "Appointments",
+      label: t("appointments"),
       path: "/appointments",
     },
-    { icon: <Wrench size={24} />, label: "Repairs", path: "/repairs" },
-    { icon: <Package size={24} />, label: "Inventory", path: "/inventory" },
-    { icon: <Users size={24} />, label: "Customers", path: "/customers" },
+    { icon: <Wrench size={24} />, label: t("repairs"), path: "/repairs" },
+    { icon: <Package size={24} />, label: t("inventory"), path: "/inventory" },
+    { icon: <Users size={24} />, label: t("customers"), path: "/customers" },
+    { icon: <FileText size={24} />, label: t("orders"), path: "/orders" },
   ];
 
   // Bottom navigation items
   const bottomNavItems = [
-    { icon: <Settings size={24} />, label: "Settings", path: "/settings" },
-    { icon: <HelpCircle size={24} />, label: "Help", path: "/help" },
-    { icon: <LogOut size={24} />, label: "Logout", path: "/logout" },
+    { icon: <Settings size={24} />, label: t("settings"), path: "/settings" },
+    { icon: <HelpCircle size={24} />, label: t("help"), path: "/help" },
   ];
 
   return (
