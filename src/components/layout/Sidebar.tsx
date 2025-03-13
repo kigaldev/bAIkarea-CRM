@@ -41,6 +41,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
     { icon: <Package size={24} />, label: t("inventory"), path: "/inventory" },
     { icon: <Users size={24} />, label: t("customers"), path: "/customers" },
     { icon: <FileText size={24} />, label: t("orders"), path: "/orders" },
+    { icon: <ShoppingCart size={24} />, label: t("orders"), path: "/orders" },
   ];
 
   // Bottom navigation items

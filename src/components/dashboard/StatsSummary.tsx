@@ -75,7 +75,7 @@ const StatsSummary = ({
       <StatCard
         title="Active Repairs"
         value={stats.activeRepairs}
-        icon={<Wrench className="h-6 w-6 text-[#FF6B00]" />}
+        icon={<Wrench className="h-6 w-6 text-[#FFEC5C]" />}
         trend={{ value: 12, isPositive: true }}
       />
       <StatCard

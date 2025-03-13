@@ -147,7 +147,7 @@ const AppointmentsOverview = ({
       </CardContent>
       <CardFooter className="border-t border-[#333333] p-4">
         <Button
-          className="w-full bg-[#FF6B00] hover:bg-[#FF6B00]/90 text-white"
+          className="w-full bg-[#FFEC5C] hover:bg-[#FFEC5C]/90 text-black"
           onClick={() => console.log("Create new appointment")}
         >
           Create New Appointment

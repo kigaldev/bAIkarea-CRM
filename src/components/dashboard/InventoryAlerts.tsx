@@ -94,7 +94,7 @@ const InventoryAlerts = ({
                   </div>
                   <Button
                     size="sm"
-                    className="bg-[#FF6B00] hover:bg-[#FF6B00]/80 text-white"
+                    className="bg-[#FFEC5C] hover:bg-[#FFEC5C]/80 text-black"
                     onClick={() => onReorder(item.id)}
                   >
                     <ShoppingCart className="h-3.5 w-3.5 mr-1" />

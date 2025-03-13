@@ -73,7 +73,7 @@ const defaultActivities: ActivityItem[] = [
     title: "New Appointment Scheduled",
     description: "John Smith booked a tune-up service for tomorrow at 2:00 PM",
     timestamp: "25 min ago",
-    icon: <Calendar className="h-4 w-4 text-[#FF6B00]" />,
+    icon: <Calendar className="h-4 w-4 text-[#FFEC5C]" />,
   },
   {
     id: "3",
