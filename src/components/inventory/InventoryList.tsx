@@ -34,9 +34,11 @@ import {
   Trash2,
   ShoppingCart,
   AlertCircle,
+  Lock,
 } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { useToast } from "@/components/ui/use-toast";
+import { useAppContext } from "../layout/AppContext";
 
 interface InventoryItem {
   id: string;
@@ -53,6 +55,7 @@ interface InventoryItem {
 }
 
 const InventoryList: React.FC = () => {
+  const { hasModuleAccess } = useAppContext();
   const [items, setItems] = useState<InventoryItem[]>([
     {
       id: "1",
@@ -266,15 +269,47 @@ const InventoryList: React.FC = () => {
   // Get unique categories for filter
   const categories = Array.from(new Set(items.map((item) => item.category)));
 
+  // Check if user has access to Inventory Pro module
+  const hasInventoryProAccess = hasModuleAccess("inventory-pro");
+
+  // Limit items if user doesn't have Inventory Pro
+  const displayedItems = hasInventoryProAccess
+    ? filteredItems
+    : filteredItems.slice(0, 10);
+
   return (
     <Card className="w-full h-full bg-[#101010] border-[#333333] overflow-hidden">
       <CardHeader className="pb-2 border-b border-[#333333]">
         <div className="flex justify-between items-center">
-          <CardTitle className="text-xl font-bold text-white">
-            {t("inventory")}
-          </CardTitle>
+          <div>
+            <CardTitle className="text-xl font-bold text-white flex items-center">
+              {t("inventory")}
+              {!hasInventoryProAccess && (
+                <Badge className="ml-2 bg-gray-500/20 text-gray-400">
+                  Versión Básica
+                </Badge>
+              )}
+            </CardTitle>
+            {!hasInventoryProAccess && (
+              <p className="text-xs text-gray-400 mt-1">
+                Limitado a 10 artículos. Actualiza al módulo Inventario Pro para
+                acceso ilimitado.
+              </p>
+            )}
+          </div>
           <Button
-            onClick={() => setIsAddDialogOpen(true)}
+            onClick={() => {
+              if (hasInventoryProAccess || items.length < 10) {
+                setIsAddDialogOpen(true);
+              } else {
+                toast({
+                  title: "Límite alcanzado",
+                  description:
+                    "Has alcanzado el límite de 10 artículos en la versión básica. Actualiza al módulo Inventario Pro para añadir más artículos.",
+                  variant: "destructive",
+                });
+              }
+            }}
             className="bg-[#FFEC5C] hover:bg-[#FFEC5C]/90 text-black"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -344,7 +379,7 @@ const InventoryList: React.FC = () => {
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredItems.map((item) => (
+                displayedItems.map((item) => (
                   <TableRow
                     key={item.id}
                     className="border-b border-[#333333] hover:bg-[#1A1A1A]"
@@ -404,6 +439,34 @@ const InventoryList: React.FC = () => {
                     </TableCell>
                   </TableRow>
                 ))
+              )}
+              {!hasInventoryProAccess && filteredItems.length > 10 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-4 bg-[#1A1A1A]"
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="flex items-center text-[#FFEC5C] mb-2">
+                        <Lock className="h-4 w-4 mr-2" />
+                        <span>
+                          Hay {filteredItems.length - 10} artículos más
+                          disponibles en Inventario Pro
+                        </span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-[#FFEC5C] text-[#FFEC5C] hover:bg-[#FFEC5C]/10"
+                        onClick={() =>
+                          (window.location.href = "/settings?tab=subscriptions")
+                        }
+                      >
+                        Actualizar a Inventario Pro
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
               )}
             </TableBody>
           </Table>
